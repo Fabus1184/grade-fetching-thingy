@@ -1,3 +1,5 @@
+[![Haskell CI](https://github.com/Fabus1184/grade-fetching-thingy/actions/workflows/haskell.yml/badge.svg)](https://github.com/Fabus1184/grade-fetching-thingy/actions/workflows/haskell.yml)
+
 # Grade fetching thingy
 
 Username and password are read from the environment variables `USERNAME` and `PASSWORD` respectively.
