@@ -2,9 +2,8 @@
 
 module Format (showTable) where
 
-import Data.List.Extra (groupSortOn, sortOn)
+import Data.List.Extra (sortOn)
 import Data.Maybe (fromMaybe)
-import Data.Ord (Down (..))
 import Text.Printf (PrintfType, printf)
 
 import Types (Grade (..))
@@ -38,7 +37,7 @@ formatRow
         , versuch
         } = printf rowFormat (show prüfNr) prüfungstext (show semester) (maybe "" show note) status (show ects) (show versuch)
 
-showTable :: [Grade] -> String
+showTable :: [[Grade]] -> String
 showTable gs =
     unlines $
         [ format headerFormat
@@ -57,9 +56,8 @@ showTable gs =
                 ( concatMap
                     ( (++ [format separatorFormat])
                         . map formatRow
-                        . sortOn (fromMaybe (read "Infinity") . note)
+                        . Data.List.Extra.sortOn (fromMaybe (read "Infinity") . note)
                     )
-                    . groupSortOn (Down . semester)
                     $ gs
                 )
             ++ [ format
