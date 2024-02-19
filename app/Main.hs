@@ -1,6 +1,6 @@
 module Main (main) where
 
-import Data.List.Extra (groupSortOn, nubOrdOn)
+import Data.List.Extra (groupSortOn, maximumOn)
 import Data.Ord (Down (..))
 import SimplePrompt (prompt, promptPassword)
 
@@ -18,10 +18,10 @@ main = do
         >>= putStrLn
             . showTable
             . map fixEntries
-            . groupSortOn (Down . semester)
+            . Data.List.Extra.groupSortOn (Down . semester)
 
 -- for whatever reason, many entries appear twice, once with a zero appended to the Prüf.Nr
 fixEntries :: [Grade] -> [Grade]
-fixEntries = nubOrdOn (f . prüfNr)
+fixEntries = map (maximumOn versuch) . groupSortOn (f . prüfNr)
   where
     f x = if x `mod` 10 == 0 then x `div` 10 else x
